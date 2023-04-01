@@ -29,11 +29,19 @@ export default function Home({data}) {
   )
 }
 
-export async function getServerSideProps() {
-  // Fetch data from external API
-  const res = await fetch(`https://api.spoonacular.com/recipes/random?number=10&apiKey=${process.env.SPOONACULAR_API_KEY}`)
-  const data = await res.json()
+export async function getServerSideProps({res}) {
+  //s-maxage: secons this value is considered fresh
+  //stale-while-revalidate: stale-while-revalidate.
+  //The steal value will be rendered but in th background will be a petition for the new value
 
-  // Pass data to the page via props
+  res.setHeader(
+    'Cache-Control',
+    'public, s-maxage=3600, stale-while-revalidate=7200'
+  )
+
+  const response = await fetch(`https://api.spoonacular.com/recipes/random?number=10&apiKey=${process.env.SPOONACULAR_API_KEY}`)
+  const data = await response.json()
+
+
   return { props: { data } }
 }
