@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import styles from '@/styles/Home.module.css'
+import ReciepItem from '@/components/RecipeItem'
 
 export default function Home({data}) {
   return (
@@ -14,15 +14,7 @@ export default function Home({data}) {
       <main>
         <h1>Pocket Chef</h1>
         {data.recipes.map(item =>
-          <div key={item.title}>
-            <Image
-                src={item.image}
-                alt={item.title}
-                width={160}
-                height={90}
-              />
-            <p>{item.title}</p>
-          </div>
+          <ReciepItem key={item.title} item={item} /> 
         )}
       </main>
     </>
