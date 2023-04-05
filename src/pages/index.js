@@ -1,6 +1,5 @@
 import Head from 'next/head'
-import Image from 'next/image'
-import ReciepItem from '@/components/RecipeItem'
+import RecipeCarousel from '@/components/RecipeCarousel'
 
 export default function Home({data}) {
   return (
@@ -13,9 +12,7 @@ export default function Home({data}) {
       </Head>
       <main>
         <h1>Pocket Chef</h1>
-        {data.recipes.map(item =>
-          <ReciepItem key={item.title} item={item} /> 
-        )}
+        <RecipeCarousel items={data.recipes} />
       </main>
     </>
   )

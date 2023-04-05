@@ -79,13 +79,9 @@
   margin: 0;
 }
 
-html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
-}
-
-body {
   color: rgb(var(--foreground-rgb));
   background: linear-gradient(
       to bottom,
@@ -94,6 +90,13 @@ body {
     )
     rgb(var(--background-start-rgb));
   font-family: var(--font-roboto);
+}
+
+html {
+  width: calc(100vw - 40px);
+  max-width: 1440px;
+  overflow-x: hidden;
+  margin: 0 auto;
 }
 
 a {

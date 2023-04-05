@@ -1,0 +1,43 @@
+import styled from "styled-components";
+
+export const ScrollerContainer = styled.div`
+  position: relative;
+  width: 100%;
+`;
+
+export const RecipeContainer = styled.div`
+  width: 100%;
+  display: flex;
+  gap: 20px;
+  overflow: hiden;
+  overflow-y: scroll;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
+export const LeftButton = styled.button`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  padding: 10px;
+  z-index: 1;
+  background: linear-gradient(90deg, rgba(0,0,0,1) 0%, rgba(0,0,0,0) 100%);
+  border: none;
+  ${props => props.disabled && "opacity: 0;" }
+`
+
+export const RigthButton = styled.button`
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  padding: 10px;
+  z-index: 1;
+  background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
+  border: none;
+  ${props => props.disabled && "opacity: 0;" }
+`
+
