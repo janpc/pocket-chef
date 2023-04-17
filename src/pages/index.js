@@ -1,7 +1,8 @@
 import Head from 'next/head'
 import RecipeCarousel from '@/components/RecipeCarousel'
+import { getHomepageData } from '@/utils/api'
 
-export default function Home({data}) {
+export default function Home({random, italian, japanese, mediterranean, mexican}) {
   return (
     <>
       <Head>
@@ -12,7 +13,11 @@ export default function Home({data}) {
       </Head>
       <main>
         <h1>Pocket Chef</h1>
-        <RecipeCarousel items={data.recipes} />
+        <RecipeCarousel title={'You may like...'} items={random.recipes} />
+        <RecipeCarousel title={'Italian food:'} items={italian.recipes} />
+        <RecipeCarousel title={'Japanese food:'} items={japanese.recipes} />
+        <RecipeCarousel title={'Mediterranean food:'} items={mediterranean.recipes} />
+        <RecipeCarousel title={'Mexican food:'} items={mexican.recipes} />
       </main>
     </>
   )
@@ -28,9 +33,16 @@ export async function getServerSideProps({res}) {
     'public, s-maxage=3600, stale-while-revalidate=7200'
   )
 
-  const response = await fetch(`https://api.spoonacular.com/recipes/random?number=10&apiKey=${process.env.SPOONACULAR_API_KEY}`)
-  const data = await response.json()
+  const response = await Promise.all([
+    fetch(`https://api.spoonacular.com/recipes/random?number=10&apiKey=${process.env.SPOONACULAR_API_KEY}`),
+    fetch(`https://api.spoonacular.com/recipes/random?number=10&tags=italian&apiKey=${process.env.SPOONACULAR_API_KEY}`),
+    fetch(`https://api.spoonacular.com/recipes/random?number=10&tags=japanese&apiKey=${process.env.SPOONACULAR_API_KEY}`),
+    fetch(`https://api.spoonacular.com/recipes/random?number=10&tags=mediterranean&apiKey=${process.env.SPOONACULAR_API_KEY}`),
+    fetch(`https://api.spoonacular.com/recipes/random?number=10&tags=mexican&apiKey=${process.env.SPOONACULAR_API_KEY}`)
+  ])
+
+  const [random, italian, japanese, mediterranean, mexican] = await Promise.all(response.map(i => i.json()));
 
 
-  return { props: { data } }
+  return { props: { random, italian, japanese, mediterranean, mexican } }
 }

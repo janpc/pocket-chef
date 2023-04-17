@@ -8,6 +8,7 @@ export const RecipeContainer = styled.div`
   border: 1px solid white;
   border-radius: 10px;
   overflow: hidden;
+  background: linear-gradient(-73deg, rgb(21,31,41), rgb(12,13,14));
 `;
 
 export const ReciepImage = styled(Image)`

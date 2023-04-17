@@ -1,18 +1,16 @@
 import ReciepItem from '@/components/RecipeItem'
-import { RecipeContainer, LeftButton, ScrollerContainer, RigthButton } from './styles'
+import { RecipeContainer, LeftButton, ScrollerContainer, RigthButton, Title } from './styles'
 import { useEffect, useRef, useState } from 'react';
 import { Next, Before } from '../icons/basicIcons';
 
 
-export default function RecipeCarousel({items}) {
+export default function RecipeCarousel({items, title}) {
   const [position, setPosition] = useState(0);
   const [disabledBack, setDisabledBackward] = useState(false);
   const [disabledFordward, setDisabledFordward] = useState(true);
   const scrollContainer = useRef();
 
   useEffect(() => {
-    
-
     const conatiner = scrollContainer.current;
     setDisabledBackward(conatiner.scrollLeft == 0)
     setDisabledFordward(conatiner.scrollWidth < conatiner.offsetWidth + conatiner.scrollLeft)
@@ -30,7 +28,7 @@ export default function RecipeCarousel({items}) {
     setPosition(pos);
     scrollContainer.current.scrollTo({
       top: 0,
-      left: pos * 320,
+      left: pos * 350,
       behavior: 'smooth'
     });
   }
@@ -46,23 +44,27 @@ export default function RecipeCarousel({items}) {
   const moveForward = () => {
     scrollToPosition(position + 1);
   }
-  
+
   const moveBack = () => {
     scrollToPosition(position - 1);
   }
+
   return (
-    <ScrollerContainer>
-      <LeftButton disabled={disabledBack} onClick={moveBack}>
-        <Before />
-      </LeftButton>
-      <RecipeContainer ref={scrollContainer}>
-        {items.map(item =>
-          <ReciepItem key={item.id} item={item} /> 
-        )}
-      </RecipeContainer>
-      <RigthButton disabled={disabledFordward} onClick={moveForward}>
-        <Next />
-      </RigthButton>
-    </ScrollerContainer>
+    <> 
+      <Title>{title}</Title>
+      <ScrollerContainer>
+        <LeftButton disabled={disabledBack} onClick={moveBack}>
+          <Before />
+        </LeftButton>
+        <RecipeContainer ref={scrollContainer}>
+          {items.map(item =>
+            <ReciepItem key={item.id} item={item} /> 
+          )}
+        </RecipeContainer>
+        <RigthButton disabled={disabledFordward} onClick={moveForward}>
+          <Next />
+        </RigthButton>
+      </ScrollerContainer>
+    </>
   )
 }
